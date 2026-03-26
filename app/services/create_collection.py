@@ -6,9 +6,9 @@ from qdrant_client.models import VectorParams, Distance
 
 # ✅ Load .env properly (important for nested structure)
 from pathlib import Path
-env_path = Path(__file__).resolve().parent / ".env"
-load_dotenv(dotenv_path=env_path)
-
+# env_path = Path(__file__).resolve().parent / ".env"
+# load_dotenv(dotenv_path=env_path)
+load_dotenv()
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "DOCUMENTS")
 QDRANT_URL = os.getenv("QDRANT_URL")
 # QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
