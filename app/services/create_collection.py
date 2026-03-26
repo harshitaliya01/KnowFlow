@@ -4,17 +4,26 @@ from dotenv import load_dotenv
 from qdrant_client import AsyncQdrantClient
 from qdrant_client.models import VectorParams, Distance
 
-load_dotenv()
+# ✅ Load .env properly (important for nested structure)
+from pathlib import Path
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "DOCUMENTS")
-QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
+QDRANT_URL = os.getenv("QDRANT_URL")
+# QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-# 🔥 IMPORTANT: must match your embedding model
-VECTOR_SIZE = 1536   # text-embedding-3-small
+VECTOR_SIZE = 1536  # text-embedding-3-small
 
 
 async def create_collection():
-    client = AsyncQdrantClient(url=QDRANT_URL)
+    print("🔗 Connecting to:", QDRANT_URL)
+
+    client = AsyncQdrantClient(
+        url=QDRANT_URL,
+        # api_key=QDRANT_API_KEY,
+        # check_compatibility=False
+    )
 
     try:
         # Check if collection exists
@@ -37,7 +46,7 @@ async def create_collection():
         print(f"✅ Collection '{COLLECTION_NAME}' created successfully")
 
     except Exception as e:
-        print(f"❌ Error creating collection: {str(e)}")
+        print(f"❌ Error: {str(e)}")
 
 
 if __name__ == "__main__":
