@@ -41,8 +41,7 @@ Create a `.env` file in the root with the following variables:
 | `SUPABASE_URL` | Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (for storage operations) |
 | `QDRANT_URL` | Qdrant server URL (e.g., `http://localhost:6333`) |
-| `QDRANT_API_KEY` | Qdrant API key (if used) |
-| `COLLECTION_NAME` | Qdrant collection name (default: `documents`) |
+| `COLLECTION_NAME` | Qdrant collection name (default: `DOCUMENTS`) |
 | `REDIS_URL` | Redis URL (e.g., `redis://redis:6379/0`) |
 | `OPENAI_API_KEY` | API key for the LLM (if required by your provider) |
 
