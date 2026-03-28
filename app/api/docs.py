@@ -88,12 +88,9 @@ async def document_show(db:AsyncSession= Depends(get_db),user= Depends(get_curre
 @router.delete("/document/{doc_id}")
 async def delete_document(doc_id:int,db:AsyncSession=Depends(get_db),user= Depends(get_current_user)):
     try:
-        print("0")
         await document_delete(doc_id=doc_id,db=db, user=user)
-        print("10")
         return {"msg":"Deleted Success"}
     except Exception as e:
-        print("11")
         print(str(e))
         raise HTTPException(status_code=500,detail="Internal Server Error4")
 

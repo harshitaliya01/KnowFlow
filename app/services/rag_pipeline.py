@@ -46,17 +46,10 @@ async def run_rag(query: str, doc_id: int):
         {query}""", 
         input_variables=["context","query"]
     )
-    print(template)
-    print("context======",context)
 
     parser = StrOutputParser()
-    print("0")
     structur_model = model.with_structured_output(LLMResponse)
 
-    print("1")
     chain = template | structur_model
-    print("2")
     result = await chain.ainvoke({"context": context, "query": query})
-    print("3")
-    print(result)
     return result

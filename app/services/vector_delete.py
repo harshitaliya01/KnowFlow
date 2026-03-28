@@ -3,7 +3,6 @@ from qdrant_client.models import Filter, FieldCondition, MatchValue
 import os
 
 async def delete_vectors(doc_id: int):
-    print("4")
     collection = os.getenv("COLLECTION_NAME")
     client = AsyncQdrantClient(
         url=os.getenv("QDRANT_URL"),
@@ -26,7 +25,6 @@ async def delete_vectors(doc_id: int):
     )
     points = search_result[0]
 
-    print("5")
     if points:
         await client.delete(
             collection_name=collection,
