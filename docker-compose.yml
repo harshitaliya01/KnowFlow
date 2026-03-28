@@ -16,7 +16,7 @@ services:
   worker:
     build: .
     container_name: celery_worker
-    command: sh -c "sleep 10 && celery -A app.worker.celery_worker.celery_app worker --loglevel=info --concurrency=4"
+    command: celery -A app.worker.celery_worker.celery_app worker --loglevel=info --pool=solo
     volumes:
       - .:/app
     env_file:

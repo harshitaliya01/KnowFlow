@@ -111,12 +111,12 @@ async def search_text(request: Request, doc_id: int, query: str, db: AsyncSessio
     if document.user_id != current_user.id:
         raise HTTPException(status_code=400, detail="You Can Not Perform This Action")
     if document.status != "Completed":
-        raise HTTPException(status_code=400, detail="Please Embedd The Document")
+        raise HTTPException(status_code=400, detail="Please Re-Upload The Document Or Wait For Processing")
     
     # retriever = get_retriever(doc_id)
     # res = await retriever.ainvoke(query)
     res = await run_rag(query=query, doc_id=doc_id)
-    return {"result":res.answer,"page":res.page}
+    return {"result":res.answer,"page":res.page_number}
 
 
 

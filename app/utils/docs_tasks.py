@@ -11,7 +11,7 @@ import os
 
 DB_URL = os.getenv("DATABASE_URL")
 
-@shared_task(bind=True, max_retries=3)
+@shared_task(bind=True, max_retries=3, soft_time_limit=300)
 def process_document(self, file_path, doc_id):
     import asyncio
     async def run():

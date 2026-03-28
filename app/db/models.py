@@ -29,5 +29,5 @@ class Chunk(Base):
     chunk_id = Column(String(100), unique=True, nullable=False, index=True)
     chunk_index = Column(Integer, nullable=False)
     content = Column(Text, nullable=False) 
-    page = Column(Integer, nullable=True)
+    page_number = Column(Integer, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

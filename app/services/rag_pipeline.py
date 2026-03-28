@@ -13,10 +13,12 @@ model = ChatOpenAI(
 def format_context(docs):
     context = ""
     for i, doc in enumerate(docs):
-        page = doc.metadata.get("page", "unknown")
+        page = doc.metadata.get("page_number")
+        page_display = page + 1 if isinstance(page, int) else "unknown"
+                    
         context += f"""
         [Chunk {i+1}]
-        Page: {page+1}
+        Page_number: {page_display}
         Content: {doc.page_content}
         """
     
