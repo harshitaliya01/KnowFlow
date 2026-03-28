@@ -22,7 +22,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # for development only
+    allow_origins=["https://app.knowflow-ai.online"],  # for development only
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
