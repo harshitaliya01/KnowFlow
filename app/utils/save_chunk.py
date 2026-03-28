@@ -26,7 +26,16 @@ async def save_chunks(db, chunks):
                     page_number=int(page_number)
                 )
             )
-        
+        new_docs = [
+            Chunk(
+                document_id=int(chunk.metadata.get("document_id")),
+                chunk_id = chunk.metadata.get("chunk_id"),
+                chunk_index=chunk.metadata.get("chunk_index"),
+                content = chunk.page_content,
+                page_number = chunk.metadata.get("page_number")
+            )
+            for chunk in chunks
+        ]
         db.add_all(new_docs)
         await db.flush()
     except Exception as e:
