@@ -97,7 +97,7 @@ async def delete_document(doc_id:int,db:AsyncSession=Depends(get_db),user= Depen
 
 @router.post("/search")
 @limiter.limit("5/minute")
-async def search_text(request: Request, payload: SearchRequest,, db: AsyncSession= Depends(get_db), user= Depends(get_current_user)):
+async def search_text(request: Request, payload: SearchRequest, db: AsyncSession= Depends(get_db), user= Depends(get_current_user)):
     doc_id = payload.doc_id
     query = payload.query
     current_user = await db.execute(select(User).where(User.email == user["email"]))
