@@ -19,3 +19,7 @@ class DocumentOut(BaseModel):
     filepath: str
     source: str
     created_at: str
+
+class SearchRequest(BaseModel):
+    doc_id: int
+    query: str
