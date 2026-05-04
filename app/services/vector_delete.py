@@ -6,7 +6,7 @@ async def delete_vectors(doc_id: int):
     collection = os.getenv("COLLECTION_NAME")
     client = AsyncQdrantClient(
         url=os.getenv("QDRANT_URL"),
-        # api_key=os.getenv("QDRANT_API_KEY"),
+        api_key=os.getenv("QDRANT_API_KEY"),
     )
 
     await client.delete(

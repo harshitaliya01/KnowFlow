@@ -11,8 +11,6 @@ celery_app = Celery(
 )
 
 celery_app.conf.update(
-    # worker_concurrency=1,
-    # worker_prefetch_multiplier=1,
     task_track_started=True,
     timezone="Asia/Kolkata",
     enable_utc=True,

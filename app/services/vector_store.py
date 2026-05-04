@@ -17,7 +17,7 @@ async def qdrant_vector_store(chunks):
         documents=chunks,
         embedding=embedding,
         url = os.getenv("QDRANT_URL"),
-        # api_key=os.getenv("QDRANT_API_KEY"),
+        api_key=os.getenv("QDRANT_API_KEY"),
         collection_name= COLLECTION_NAME,
     )
     

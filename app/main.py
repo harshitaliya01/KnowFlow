@@ -14,7 +14,7 @@ from app.core.logger import setup_logger
 from app.core.errors import add_exception_handlers
 setup_logger()
 
-app = FastAPI()
+app = FastAPI(docs_url=None)
 
 app.state.limiter = limiter
 add_exception_handlers(app)
@@ -22,7 +22,10 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://app.knowflow-ai.online"],  # for development only
+    ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],  # for development only
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,5 +33,13 @@ app.add_middleware(
 
 app.include_router(auth.router, tags=["Authentication"])
 app.include_router(docs.router, tags=["Document"])
+
+# Frontend route
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+app.mount("/static", StaticFiles(directory="static"), name="static")
+@app.get("/")
+def home():
+    return FileResponse("static/index.html")
 
 # docker-compose up --build
