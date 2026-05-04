@@ -3,9 +3,11 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from app.services.schemas import LLMResponse
+import os
 
 model = ChatOpenAI(
-    base_url="https://api.euron.one/api/v1/euri",
+    base_url="https://api.groq.com/openai/v1",
+    api_key=os.getenv("GROQ_API_KEY"),
     model="openai/gpt-oss-120b"
 )
 
