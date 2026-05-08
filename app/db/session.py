@@ -15,7 +15,6 @@ DB_URL = os.getenv("DATABASE_URL")
 engine = create_async_engine(
     DB_URL,
     poolclass=NullPool,
-    connect_args={"ssl":"require","statement_cache_size": 0},
     echo=False,
 )
 
