@@ -12,7 +12,7 @@ services:
     depends_on:
       - redis
   worker:
-    image: knowflow-worker
+    image: knowflow-api
     container_name: celery_worker
     command: celery -A app.worker.celery_worker.celery_app worker --loglevel=info --pool=solo
     env_file:
