@@ -14,7 +14,11 @@ from app.core.logger import setup_logger
 from app.core.errors import add_exception_handlers
 setup_logger()
 
-app = FastAPI(docs_url=None)
+app = FastAPI(
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None
+)
 
 app.state.limiter = limiter
 add_exception_handlers(app)
