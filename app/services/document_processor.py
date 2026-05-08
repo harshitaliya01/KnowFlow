@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import PyPDFLoader
+from pypdf import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from uuid import uuid4
@@ -38,16 +38,24 @@ async def pdf_to_chunk(file_path: str,doc_id: int):
     docs = []
     try:
         if ext == "pdf":
-            loader = PyPDFLoader(temp_file)
-            docs = loader.load()
-            if not docs or not any(d.page_content.strip() for d in docs):
+            reader = PdfReader(temp_file)
+            if len(reader.pages) > 300:
+                raise ValueError("PDF too large")
+            for page_num, page in enumerate(reader.pages):
+
+                text = page.extract_text() or ""
+
+                docs.append(
+                    Document(
+                        page_content=text,
+                        metadata={
+                            "page_number": page_num
+                        }
+                    )
+                )
+            if not docs:
                 raise ValueError("This PDF appears to be scanned")
-
-            for d in docs:
-                d.metadata = {
-                    "page_number": d.metadata.get("page", 0)
-                }
-
+            docs = [d for d in docs if d.page_content.strip()]
         elif ext == "txt":
 
             with open(temp_file, "r", encoding="utf-8", errors="ignore") as f:

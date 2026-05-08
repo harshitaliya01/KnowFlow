@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 
 COPY req.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir -r req.txt
+RUN pip install --no-cache-dir -r req.txt
 
 COPY . .
 
