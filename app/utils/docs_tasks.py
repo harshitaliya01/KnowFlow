@@ -12,19 +12,18 @@ import os
 from sqlalchemy.pool import NullPool
 
 DB_URL = os.getenv("DATABASE_URL")
-
-@shared_task(bind=True, max_retries=3, soft_time_limit=300)
-def process_document(self, file_path, doc_id):
-    import asyncio
-    async def run():
-        engine = create_async_engine(
+engine = create_async_engine(
             DB_URL,
             poolclass=NullPool,
             connect_args={"ssl":"require","statement_cache_size": 0},
             echo=False,
         )
+AsyncSessionLocal = async_sessionmaker(engine,expire_on_commit=False)
 
-        AsyncSessionLocal = async_sessionmaker(engine,expire_on_commit=False)
+@shared_task(bind=True, max_retries=3, soft_time_limit=300)
+def process_document(self, file_path, doc_id):
+    import asyncio
+    async def run():
         try:
             async with AsyncSessionLocal() as db:
                 document = await db.get(Document, doc_id)
