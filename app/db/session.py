@@ -14,10 +14,10 @@ DB_URL = os.getenv("DATABASE_URL")
 
 engine = create_async_engine(
     DB_URL,
-    pool_size=20,
+    pool_size=3,
     max_overflow=10,
     pool_pre_ping=True,
-    pool_recycle=3600,
+    pool_recycle=500,
     connect_args={"ssl":"require","statement_cache_size": 0},
     echo=False,
 )

@@ -9,6 +9,8 @@ from app.db.models import Document, Chunk
 from app.services.vector_delete import delete_vectors
 import os
 
+from sqlalchemy.pool import NullPool
+
 DB_URL = os.getenv("DATABASE_URL")
 
 @shared_task(bind=True, max_retries=3, soft_time_limit=300)
@@ -17,9 +19,7 @@ def process_document(self, file_path, doc_id):
     async def run():
         engine = create_async_engine(
             DB_URL,
-            pool_size=20,
-            max_overflow=10,
-            pool_recycle=3600,
+            poolclass=NullPool,
             connect_args={"ssl":"require","statement_cache_size": 0},
             echo=False,
         )
