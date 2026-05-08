@@ -5,7 +5,7 @@ load_dotenv()
 import ssl
 import certifi
 import os
-
+from sqlalchemy.pool import NullPool
 DB_URL = os.getenv("DATABASE_URL")
 
 # ssl_context = ssl.create_default_context(cafile=certifi.where())
@@ -14,10 +14,7 @@ DB_URL = os.getenv("DATABASE_URL")
 
 engine = create_async_engine(
     DB_URL,
-    pool_size=3,
-    max_overflow=10,
-    pool_pre_ping=True,
-    pool_recycle=500,
+    poolclass=NullPool,
     connect_args={"ssl":"require","statement_cache_size": 0},
     echo=False,
 )
